@@ -5,8 +5,8 @@ paymentflowrules :
       value: "02"
     - key : temp
       operator: EQ
-      value : "23"
+      value : "alias"
   TPV : 
-    - key : beneficiarydetail
+    - key : bankDetails
       operator: MAP
-      value : "bankDetails"
+      value : "beneficiarydetail"

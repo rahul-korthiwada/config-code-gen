@@ -12,6 +12,10 @@ import qualified Data.Aeson as A
 import Control.Lens
 import Utils
 import Data.Aeson.Lens
+import Control.Lens.At
+import Data.Aeson
+import Prelude
+import GHC.List
 
 data BankDetail = BankDetail {
     bankAccountNumber :: Text,
@@ -37,13 +41,22 @@ add x y = x + y
 
 main :: IO ()
 main = do
-    let validatePayload = validateRequest PAYU "DOTP" (A.object [("bankDetails" , A.String "Common") ])
+    let validatePayload = validateRequest PAYU "DOTP" (A.object []) (A.object [("txn_s2s_flow" , A.String "02") , ("temp" , A.String "alias") ])
+    let validatePayload2 = validateRequest PAYU "TPV" (A.object [("beneficiarydetail", A.String "AccountName")]) (A.object [("temp" , A.String "alias") ])
+    let validatePayload3 = validateRequest PAYU "TPV" (A.object [("beneficiarydetail", A.String "AccountName")]) (A.object [("bankDetails" , A.String "Nothing") ])
+    let validatePayload4 = validateRequest PAYU "TPV" (A.object [("beneficiarydetail", A.String "AccountName")]) (A.object [("bankDetails" , A.String "AccountName") ])
     putStrLn (show validatePayload)
-
--- $(do
---     dec <- [d| k req = lookupCustom (ix "res_code"._Value. ix "res_number" ) req
---             |]
---     runIO (print dec)
---     return [])
+    putStrLn (show validatePayload2)
+    putStrLn (show validatePayload3)
+    putStrLn (show validatePayload4)
+    pure ()
 
 $(generateGatewayInstances ''PAYU)
+
+-- instance Class.GatewayValidator Main.PAYU where 
+--     validateRequest _ flow req gwReq = 
+--         let result = case flow of
+--                         "DOTP" -> Prelude.and [(Utils.lookupCustom (Control.Lens.At.ix "txn_s2s_flow") req) Prelude.== (Data.Aeson.String "02"),
+--                                                     (Utils.lookupCustom (Control.Lens.At.ix "temp") req) Prelude.== (Data.Aeson.String "23")]
+--                         _ -> True
+--         in result

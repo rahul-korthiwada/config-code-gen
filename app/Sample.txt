@@ -1,0 +1,7 @@
+instance Class.GatewayValidator Main.PAYU
+    where validateRequest _ flow req gwReq = let result = case flow of
+                                                              "DOTP" -> Data.Foldable.and [(Utils.lookupCustom (Control.Lens.At.ix "txn_s2s_flow") gwReq) GHC.Classes.== (Data.Aeson.Types.Internal.String "02"),
+                                                                                           (Utils.lookupCustom (Control.Lens.At.ix "temp") gwReq) GHC.Classes.== (Data.Aeson.Types.Internal.String "alias")]
+                                                              "TPV" -> Data.Foldable.and [(Utils.lookupCustom (Control.Lens.At.ix "bankDetails") gwReq) GHC.Classes.== (Utils.lookupCustom (Control.Lens.At.ix "beneficiarydetail") req)]
+                                                              _ -> GHC.Types.True
+                                              in result
