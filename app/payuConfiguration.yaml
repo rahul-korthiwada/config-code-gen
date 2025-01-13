@@ -1,0 +1,12 @@
+paymentflowrules :
+  DOTP : 
+    - key: txn_s2s_flow
+      operator: EQ
+      value: "02"
+    - key : temp
+      operator: EQ
+      value : "23"
+  TPV : 
+    - key : beneficiarydetail
+      operator: MAP
+      value : "bankDetails"
