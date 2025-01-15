@@ -7,6 +7,7 @@ paymentflowrules :
       operator: EQ
       value : "23"
   TPV : 
-    - key : beneficiarydetail
+    - key : "frequency"
       operator: MAP
-      value : "bankDetails"
+      arguments: "payu.transform"
+      value : "mandate.frequency"

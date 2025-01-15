@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
 module Main where 
 
 import Prelude
@@ -21,7 +21,7 @@ data BankDetail = BankDetail {
 data PAYU = PAYU
 
 data GenericPayload = GenericPayload {
-    bankDetail :: BankDetail,
+    txn_id :: Text,
     amount :: Text 
 }
 
@@ -37,7 +37,7 @@ add x y = x + y
 
 main :: IO ()
 main = do
-    let validatePayload = validateRequest PAYU "DOTP" (A.object [("bankDetails" , A.String "Common") ])
+    let validatePayload = createRequest PAYU (GenericPayload "txn_uuid" "23") "DOTP" (A.object [("bankDetails" , A.String "Common") ])
     putStrLn (show validatePayload)
 
 -- $(do
@@ -46,4 +46,4 @@ main = do
 --     runIO (print dec)
 --     return [])
 
-$(generateGatewayInstances ''PAYU)
+$(generateGatewayInstances ''PAYU ''GenericPayload)
