@@ -9,4 +9,4 @@ paymentflowrules :
   MANDATE : 
     - key : "frequency"
       operator: MAP
-      value : "frequency"
+      value : "order"

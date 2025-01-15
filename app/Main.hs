@@ -47,4 +47,4 @@ main = do
 --     runIO (print dec)
 --     return [])
 
-$(generateGatewayInstances ''PAYU ''GenericPayload)
+$(generateGatewayInstances ''PAYU ''GenericPayload) 
