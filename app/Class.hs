@@ -5,5 +5,15 @@ import Prelude
 import qualified Data.Aeson as A
 import Data.Text
 
-class GatewayPFRequestGenerator a b where
-    createRequest :: a -> b -> Text -> A.Value -> A.Value
+
+data MandateObject = MandateObject {
+    mandate :: Text ,
+    frequency :: Text
+}
+
+data TPVObject = TPVObject {
+    beneficiarydetail :: Text
+}
+
+class GatewayPFRequestGenerator a b c where
+    createRequest :: a -> b -> c -> Text -> A.Value

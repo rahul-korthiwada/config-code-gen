@@ -1,13 +1,12 @@
 paymentflowrules :
-  DOTP : 
+  TPV : 
     - key: txn_s2s_flow
       operator: EQ
       value: "02"
     - key : temp
       operator: EQ
       value : "23"
-  TPV : 
+  MANDATE : 
     - key : "frequency"
       operator: MAP
-      arguments: "payu.transform"
-      value : "mandate.frequency"
+      value : "frequency"

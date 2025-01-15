@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings, MultiParamTypeClasses, DataKinds #-}
 module Main where 
 
 import Prelude
@@ -37,8 +37,9 @@ add x y = x + y
 
 main :: IO ()
 main = do
-    let validatePayload = createRequest PAYU (GenericPayload "txn_uuid" "23") "DOTP" (A.object [("bankDetails" , A.String "Common") ])
-    putStrLn (show validatePayload)
+    -- let validatePayload = createRequest PAYU (GenericPayload "txn_uuid" "23") "DOTP" (A.object [("bankDetails" , A.String "Common") ])
+    -- putStrLn (show validatePayload)
+    pure ()
 
 -- $(do
 --     dec <- [d| k req = lookupCustom (ix "res_code"._Value. ix "res_number" ) req
